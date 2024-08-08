@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Winners</title>
+</head>
+<body>
+<h1>Победители</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>City</th>
+    <th>Prize Amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="winner : ${winners}">
+    <td th:text="${winner.name}">Name</td>
+    <td th:text="${winner.age}">Age</td>
+    <td th:text="${winner.city}">City</td>
+    <td th:text="${winner.prize}">Prize</td>
+  </tr>
+  </tbody>
+</table>
+<br/>
+<hr/>
+<div>
+  <a href="/">Вернуться</a>
+</div>
+</body>
+</html>

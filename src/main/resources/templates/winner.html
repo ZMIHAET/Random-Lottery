@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Winner Information</title>
+</head>
+<body>
+<h1>Congratulations!</h1>
+<p>Winner Information:</p>
+<ul>
+    <li>Name: <span th:text="${winner.name}"></span></li>
+    <li>Age: <span th:text="${winner.age}"></span></li>
+    <li>City: <span th:text="${winner.city}"></span></li>
+    <li>Prize Amount: <span th:text="${prize}"></span></li>
+</ul>
+<br/>
+<hr/>
+<div>
+    <a href="/">Вернуться</a>
+</div>
+</body>
+</html>
