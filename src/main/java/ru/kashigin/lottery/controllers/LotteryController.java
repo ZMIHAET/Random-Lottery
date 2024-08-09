@@ -17,6 +17,8 @@ import ru.kashigin.lottery.util.NotCreated.ParticipantErrorResponse;
 import ru.kashigin.lottery.util.NotCreated.ParticipantNotCreatedException;
 import ru.kashigin.lottery.util.NotEnough.NotEnoughParticipantsException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Random;
 
@@ -61,15 +63,17 @@ public class LotteryController {
     }
 
     @GetMapping("/start")
-    public String randomLottery(Model model){
-        if (!checkParticipants())
+    public String randomLottery(Model model) throws URISyntaxException, IOException, InterruptedException {
+        if (participantService.getAllParticipants().size() < 2)
             throw new NotEnoughParticipantsException("Недостаточно участников для проведения лотереи");
 
-        int prize = random.nextInt(1000) + 1;
+        int prize = participantService.randomGenerator(1000);
 
         List<Participant> participants = participantService.getAllParticipants();
-        int randomIndex = random.nextInt(participants.size());
-        Participant winnerParticipant = participants.get(randomIndex);
+
+        int randomIndex = participantService.randomGenerator(participants.size());
+
+        Participant winnerParticipant = participants.get(randomIndex - 1);
 
         Winner winner = new Winner();
         winner.setName(winnerParticipant.getName());
@@ -85,10 +89,6 @@ public class LotteryController {
 
         participantService.deleteAll();
         return "/winner";
-    }
-
-    private Boolean checkParticipants(){
-        return participantService.getAllParticipants().size() >= 2;
     }
 
     @GetMapping("/winners")
